@@ -2,92 +2,52 @@
 <html lang="uz">
 <head><meta charset="UTF-8"><link rel="stylesheet" href="style.css"><title>New Order</title></head>
 <body>
-    <div class="sidebar">
-        <div class="brand">TABRIZ PRO</div>
-        <a href="dashboard.html" class="nav-item">📊 Асосий Панел</a>
-        <a href="order.html" class="nav-item active">➕ Янги Раскрой</a>
-    </div>
-
+    <div class="sidebar"><div class="brand">TABRIZ</div><a href="dashboard.html" class="nav-item">👤 Профиль</a><a href="order.html" class="nav-item active">📐 Янги Раскрой</a></div>
     <div class="main">
         <div class="glass-card">
-            <h2>ПАРАМЕТРЛАР</h2>
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                <div>
-                    <label>Материал тури</label>
-                    <select id="mat">
-                        <option value="2800x2070">ЛДСП ОҚ (2800x2070)</option>
-                        <option value="2800x2070">ЛДСП РАНГЛИ (2800x2070)</option>
-                        <option value="2800x1220">МДФ АКРИЛ (2800x1220)</option>
-                    </select>
+            <h3>БУЮРТМА ПАРАМЕТРЛАРИ</h3>
+            <div style="display: flex; gap: 20px; margin-bottom: 40px;">
+                <div style="flex: 1;">
+                    <label>Материал</label>
+                    <select id="mat"><option value="2800x2070">ЛДСП 18мм (2800x2070)</option><option value="2800x1220">АКРИЛ 18мм (2800x1220)</option></select>
                 </div>
-                <div>
-                    <label>Арра қалинлиги (мм)</label>
+                <div style="width: 150px;">
+                    <label>Арра (мм)</label>
                     <input type="number" id="kerf" value="4">
                 </div>
             </div>
 
-            <h3 style="margin-top: 30px;">ДЕТАЛЛАР РЎЙХАТИ</h3>
-            <table id="tbl">
-                <thead>
-                    <tr>
-                        <th>Узунлик (мм)</th>
-                        <th>Эни (мм)</th>
-                        <th>Сони</th>
-                        <th>Кромка (L1,L2 / W1,W2)</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
+            <table id="tbl" style="width: 100%; border-spacing: 0 10px; border-collapse: separate;">
+                <thead><tr style="color: #71717A; font-size: 12px; letter-spacing: 1px;"><th>БЎЙИ</th><th>ЭНИ</th><th>СОНИ</th><th>КРОМКА</th><th></th></tr></thead>
+                <tbody id="tbody"></tbody>
             </table>
-            
-            <div style="display: flex; gap: 15px; margin-top: 20px;">
-                <button class="btn" style="background: transparent; border: 1px solid var(--gold); color: var(--gold);" onclick="add()">+ Қатор қўшиш</button>
-                <button class="btn" onclick="calc()">📐 РАСКРОЙНИ ҲИСОБЛАШ</button>
-            </div>
+            <button class="btn" style="background: transparent; border: 1px solid var(--border); color: #fff; width: auto; padding: 10px 30px;" onclick="addRow()">+ ҚАТОР ҚЎШИШ</button>
+            <button class="btn" onclick="save()">РАСКРОЙНИ ҲИСОБЛАШ ⮕</button>
         </div>
     </div>
-
     <div class="academy-watermark">MUSTAFAYEV ACADEMY</div>
-
     <script>
-        function add() {
+        function addRow() {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td><input type="number" class="l" value="600" style="margin:0"></td>
-                <td><input type="number" class="w" value="400" style="margin:0"></td>
-                <td><input type="number" class="q" value="1" style="margin:0"></td>
-                <td>
-                    <div style="display:flex; gap:5px; justify-content:center;">
-                       <input type="checkbox" class="e1" style="width:20px; height:20px; margin:0;"> 
-                       <input type="checkbox" class="e2" style="width:20px; height:20px; margin:0;"> | 
-                       <input type="checkbox" class="e3" style="width:20px; height:20px; margin:0;"> 
-                       <input type="checkbox" class="e4" style="width:20px; height:20px; margin:0;">
-                    </div>
-                </td>
-                <td><button onclick="this.closest('tr').remove()" style="background:none; border:none; color:red; cursor:pointer; font-size:18px;">✖</button></td>
-            `;
-            document.getElementById('tbl').appendChild(tr);
+                <td><input type="number" class="l" value="700"></td>
+                <td><input type="number" class="w" value="500"></td>
+                <td><input type="number" class="q" value="2"></td>
+                <td style="text-align:center;"><input type="checkbox" class="e"> <input type="checkbox" class="e"> | <input type="checkbox" class="e"> <input type="checkbox" class="e"></td>
+                <td onclick="this.parentElement.remove()" style="cursor:pointer; color:rgba(255,255,255,0.2);">✕</td>`;
+            document.getElementById('tbody').appendChild(tr);
         }
-
-        function calc() {
-            let parts = [];
-            document.querySelectorAll('#tbl tr').forEach(r => {
+        function save() {
+            let data = [];
+            document.querySelectorAll('#tbody tr').forEach(r => {
                 const q = +r.querySelector('.q').value;
-                for(let i=0; i<q; i++) {
-                    parts.push({
-                        l: +r.querySelector('.l').value, 
-                        w: +r.querySelector('.w').value,
-                        e: [r.querySelector('.e1').checked, r.querySelector('.e2').checked, r.querySelector('.e3').checked, r.querySelector('.e4').checked]
-                    });
-                }
+                for(let i=0; i<q; i++) data.push({l:+r.querySelector('.l').value, w:+r.querySelector('.w').value});
             });
-            if(parts.length === 0) return alert("Детал киритинг!");
-            localStorage.setItem('parts', JSON.stringify(parts));
-            localStorage.setItem('matType', document.getElementById('mat').value);
-            localStorage.setItem('kerf', document.getElementById('kerf').value);
-            window.location.href = 'nesting.html';
+            localStorage.setItem('temp_parts', JSON.stringify(data));
+            localStorage.setItem('temp_mat', document.getElementById('mat').value);
+            window.location.href='nesting.html';
         }
-        add(); // Бошида 1 та қатор
+        addRow();
     </script>
 </body>
 </html>
