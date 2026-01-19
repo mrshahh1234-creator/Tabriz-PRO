@@ -3,123 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TABRIZ GROUP | Buyurtma shakli</title>
+    <title>TABRIZ GROUP | Buyurtma berish</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
         
         body { 
-            font-family: 'Inter', sans-serif; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
             margin: 0;
             min-height: 100vh;
-            /* Orqa fon uchun mebel sexi tasviri */
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
-                        url('https://images.unsplash.com/photo-1530124560677-bda8222c0e54?q=80&w=2070&auto=format&fit=crop');
+            /* Mebel sexi foni */
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1533090161767-e6ffed986c88?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: white;
+            display: flex;
+            flex-direction: column;
         }
 
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.05);
+        /* Shaffof va yumaloq kartochkalar (Glassmorphism) */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px; /* Yumaloq burchaklar */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            padding: 25px;
         }
 
-        /* Har bir katakni alohida ajratuvchi stil */
-        .input-box {
+        .input-cell {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 12px;
             width: 100%;
             outline: none;
             transition: 0.3s;
         }
 
-        .input-box:focus {
+        .input-cell:focus {
             border-color: #fbbf24;
             background: rgba(0, 0, 0, 0.6);
-            box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
         }
 
         .table-border-cell {
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
         }
 
         .header-cell {
-            background: rgba(251, 191, 36, 0.1);
+            background: rgba(251, 191, 36, 0.15);
             color: #fbbf24;
             font-weight: 800;
             text-transform: uppercase;
-            font-size: 11px;
+            font-size: 10px;
             letter-spacing: 1px;
-            border: 1px solid rgba(251, 191, 36, 0.3);
+            border: 1px solid rgba(251, 191, 36, 0.2);
         }
 
-        .academy-footer {
+        .footer-academy {
             position: fixed;
-            bottom: 20px;
-            right: 30px;
+            bottom: 15px;
+            right: 25px;
             font-weight: 800;
-            color: rgba(255, 255, 255, 0.4);
-            letter-spacing: 1px;
-            font-size: 14px;
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            font-size: 13px;
         }
 
-        .main-logo {
-            height: 110px;
+        .btn-main {
+            background-color: #fbbf24;
+            color: black;
+            font-weight: 900;
             border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .btn-main:hover {
+            background-color: #f59e0b;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(251, 191, 36, 0.3);
         }
     </style>
 </head>
 <body class="p-4 md:p-10">
 
-    <div class="max-w-7xl mx-auto w-full">
-        <header class="mb-12 text-center flex flex-col items-center">
-            <img src="https://i.ibb.co/XfR8Vp0/photo-2026-01-19-18-11-16.jpg" alt="TABRIZ MEBEL" class="main-logo">
-            <h1 class="text-4xl md:text-6xl font-black tracking-tighter uppercase">
+    <div class="max-w-6xl mx-auto w-full">
+        <header class="mb-12 text-center">
+            <h1 class="text-5xl md:text-7xl font-black tracking-tighter uppercase italic">
                 TABRIZ <span class="text-amber-400">GROUP</span>
             </h1>
-            <div class="h-1 w-24 bg-amber-400 mt-4 rounded-full"></div>
-            <p class="text-slate-300 mt-4 font-bold text-lg uppercase tracking-widest">Mebel ishlab chiqarish buyurtma shakli</p>
+            <p class="text-amber-400/80 font-bold mt-4 tracking-widest uppercase text-sm">Mebel ishlab chiqarish buyurtma portali</p>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
             <div class="lg:col-span-1 space-y-6">
-                <div class="glass-panel p-6">
-                    <h2 class="text-amber-400 font-black text-lg mb-6 flex items-center gap-2 uppercase">
-                        <i class="fas fa-user-circle"></i> Mijoz
+                <div class="glass-card">
+                    <h2 class="text-amber-400 font-black text-lg mb-5 flex items-center gap-3 uppercase">
+                        <i class="fas fa-user-tag"></i> Mijoz ma'lumotlari
                     </h2>
-                    <div class="space-y-5">
-                        <div class="bg-black/20 p-3 rounded-lg border border-white/5">
-                            <label class="text-[10px] font-bold opacity-50 uppercase">Ism va Familiya</label>
-                            <input type="text" id="fullName" class="input-box mt-1" placeholder="Ali Valiyev">
-                        </div>
-                        <div class="bg-black/20 p-3 rounded-lg border border-white/5">
-                            <label class="text-[10px] font-bold opacity-50 uppercase">Telefon raqam</label>
-                            <input type="tel" id="phone" class="input-box mt-1" placeholder="+998 90 123 45 67">
-                        </div>
+                    <div class="space-y-4">
+                        <input type="text" id="fullName" class="input-cell" placeholder="Ism va Familiya">
+                        <input type="tel" id="phone" class="input-cell" placeholder="+998 90 123 45 67">
                     </div>
                 </div>
 
-                <div class="glass-panel p-6">
-                    <h2 class="text-amber-400 font-black text-lg mb-6 flex items-center gap-2 uppercase">
-                        <i class="fas fa-layer-group"></i> Material
+                <div class="glass-card">
+                    <h2 class="text-amber-400 font-black text-lg mb-5 flex items-center gap-3 uppercase">
+                        <i class="fas fa-layer-group"></i> Mahsulot tavsifi
                     </h2>
                     <div class="space-y-4">
-                        <input type="text" id="material" class="input-box" placeholder="Material nomi (masalan: Egger)">
-                        <input type="text" id="edgeName" class="input-box" placeholder="Kromka nomi">
-                        <select id="edgeThickness" class="input-box">
+                        <input type="text" id="material" class="input-cell" placeholder="Material nomi (masalan: MDF)">
+                        <input type="text" id="edgeName" class="input-cell" placeholder="Kromka nomi">
+                        <select id="edgeThickness" class="input-cell">
                             <option value="0.4mm">Qalinligi: 0.4 mm</option>
                             <option value="1.0mm">Qalinligi: 1.0 mm</option>
                             <option value="2.0mm">Qalinligi: 2.0 mm</option>
@@ -128,27 +130,27 @@
                 </div>
             </div>
 
-            <div class="lg:col-span-3">
-                <div class="glass-panel p-6 md:p-8 min-h-full flex flex-col">
+            <div class="lg:col-span-2">
+                <div class="glass-card min-h-full flex flex-col">
                     <div class="flex justify-between items-center mb-8">
                         <h2 class="text-xl font-black text-amber-400 uppercase tracking-widest">
-                            <i class="fas fa-th-list"></i> Detallar ro'yxati
+                            <i class="fas fa-ruler-combined"></i> Detallar ro'yxati
                         </h2>
-                        <button onclick="addRow()" class="bg-amber-400 text-black font-black px-6 py-2 rounded-xl hover:bg-amber-300 transition shadow-lg">
-                            + YANGI QATOR
+                        <button onclick="addRow()" class="bg-white/10 text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-white/20 transition border border-white/20">
+                            + QATOR QO'SHISH
                         </button>
                     </div>
 
-                    <div class="overflow-x-auto border border-white/10 rounded-xl bg-black/20">
+                    <div class="overflow-x-auto border border-white/10 rounded-2xl bg-black/30">
                         <table class="w-full border-collapse">
                             <thead>
                                 <tr>
-                                    <th class="header-cell">Detal nomi</th>
-                                    <th class="header-cell w-24">Bo'yi (mm)</th>
-                                    <th class="header-cell w-24">Eni (mm)</th>
-                                    <th class="header-cell w-20">Soni</th>
-                                    <th class="header-cell">Kromka</th>
-                                    <th class="header-cell w-12"></th>
+                                    <th class="header-cell p-4">Nomi</th>
+                                    <th class="header-cell p-4 w-20">Bo'yi</th>
+                                    <th class="header-cell p-4 w-20">Eni</th>
+                                    <th class="header-cell p-4 w-16">Soni</th>
+                                    <th class="header-cell p-4 text-center">Kromka</th>
+                                    <th class="header-cell p-4 w-10"></th>
                                 </tr>
                             </thead>
                             <tbody id="tableBody"></tbody>
@@ -156,7 +158,7 @@
                     </div>
 
                     <div class="mt-10">
-                        <button onclick="sendOrder()" class="w-full bg-amber-400 text-black py-5 rounded-2xl font-black text-2xl hover:bg-amber-500 transition-all shadow-2xl flex items-center justify-center gap-4">
+                        <button onclick="sendOrder()" class="w-full btn-main py-5 text-xl flex items-center justify-center gap-4">
                             <span>BUYURTMANI YUBORISH</span>
                             <i class="fas fa-paper-plane"></i>
                         </button>
@@ -166,10 +168,10 @@
         </div>
     </div>
 
-    <div class="academy-footer italic">MUSTAFAYEV ACADEMY</div>
+    <div class="footer-academy">MUSTAFAYEV ACADEMY</div>
 
     <script>
-        const API_TOKEN = '7927717291:AAG4h_LbZoY-1s2y0_zzNoCFudrU7pPDNas';
+        const BOT_TOKEN = '7927717291:AAG4h_LbZoY-1s2y0_zzNoCFudrU7pPDNas';
         const CHAT_ID = '1015769230';
 
         window.onload = () => {
@@ -181,22 +183,22 @@
         function addRow() {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td class="table-border-cell"><input type="text" class="w-full bg-transparent outline-none text-sm val-name" placeholder="Masalan: Polka"></td>
-                <td class="table-border-cell"><input type="number" class="w-full bg-transparent outline-none text-center font-bold val-len" placeholder="0"></td>
-                <td class="table-border-cell"><input type="number" class="w-full bg-transparent outline-none text-center font-bold val-width" placeholder="0"></td>
-                <td class="table-border-cell"><input type="number" class="w-full bg-transparent outline-none text-center font-bold val-count" value="1"></td>
+                <td class="table-border-cell"><input type="text" class="w-full bg-transparent outline-none text-sm val-name" placeholder="..."></td>
+                <td class="table-border-cell text-center"><input type="number" class="w-full bg-transparent outline-none text-center font-bold val-len" placeholder="0"></td>
+                <td class="table-border-cell text-center"><input type="number" class="w-full bg-transparent outline-none text-center font-bold val-width" placeholder="0"></td>
+                <td class="table-border-cell text-center"><input type="number" class="w-full bg-transparent outline-none text-center font-bold val-count" value="1"></td>
                 <td class="table-border-cell">
                     <div class="flex gap-1 justify-center">
                         ${['L1', 'L2', 'W1', 'W2'].map(side => `
                             <label class="cursor-pointer">
                                 <input type="checkbox" value="${side}" class="hidden peer val-edge">
-                                <span class="w-8 h-8 flex items-center justify-center rounded-lg border border-white/20 text-[10px] font-bold peer-checked:bg-amber-400 peer-checked:text-black transition-all">${side}</span>
+                                <span class="w-7 h-7 flex items-center justify-center rounded-lg border border-white/20 text-[9px] font-bold peer-checked:bg-amber-400 peer-checked:text-black transition-all">${side}</span>
                             </label>
                         `).join('')}
                     </div>
                 </td>
                 <td class="table-border-cell text-center">
-                    <button onclick="this.parentElement.parentElement.remove()" class="text-white/20 hover:text-red-500"><i class="fas fa-trash-alt"></i></button>
+                    <button onclick="this.parentElement.parentElement.remove()" class="text-white/20 hover:text-red-500"><i class="fas fa-times"></i></button>
                 </td>
             `;
             document.getElementById('tableBody').appendChild(tr);
@@ -206,11 +208,11 @@
             const name = document.getElementById('fullName').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const mat = document.getElementById('material').value.trim();
-            const edge = document.getElementById('edgeName').value.trim();
-            const thick = document.getElementById('edgeThickness').value;
+            const edgeName = document.getElementById('edgeName').value.trim();
+            const edgeThick = document.getElementById('edgeThickness').value;
 
             if(!name || !phone || !mat) {
-                alert("Iltimos, Ism, Telefon va Materialni to'ldiring!");
+                alert("Iltimos, ism, telefon va materialni kiriting!");
                 return;
             }
 
@@ -226,30 +228,30 @@
             })).filter(d => d.n && d.l && d.w);
 
             if(details.length === 0) {
-                alert("Kamida bitta detal o'lchamlarini kiriting!");
+                alert("Kamida bitta detal o'lchamini kiriting!");
                 return;
             }
 
-            let message = `📝 **YANGI BUYURTMA: TABRIZ GROUP**\n\n`;
-            message += `👤 **Mijoz:** ${name}\n`;
-            message += `📞 **Telefon:** ${phone}\n\n`;
-            message += `🪵 **Material:** ${mat}\n`;
-            message += `🧵 **Kromka:** ${edge} (${thick})\n`;
-            message += `───────────────────\n\n`;
+            let msg = `🛠 **TABRIZ GROUP: YANGI BUYURTMA**\n\n`;
+            msg += `👤 **Mijoz:** ${name}\n`;
+            msg += `📞 **Telefon:** ${phone}\n\n`;
+            msg += `🪵 **Material:** ${mat}\n`;
+            msg += `🧵 **Kromka:** ${edgeName} (${edgeThick})\n`;
+            msg += `───────────────────\n\n`;
 
             details.forEach((d, i) => {
-                message += `${i+1}. **${d.n}**\n   📏 ${d.l} x ${d.w} — *${d.c} dona*\n   📍 Kromka: ${d.e.length > 0 ? d.e.join(', ') : 'yo\'q'}\n\n`;
+                msg += `${i+1}. **${d.n}**\n   📏 ${d.l} x ${d.w} — *${d.c} dona*\n   📍 Kromka: ${d.e.length > 0 ? d.e.join(', ') : 'yo\'q'}\n\n`;
             });
 
             try {
-                const res = await fetch(`https://api.telegram.org/bot${API_TOKEN}/sendMessage`, {
+                const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'Markdown' })
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: msg, parse_mode: 'Markdown' })
                 });
 
                 if(res.ok) {
-                    const next = confirm("✅ Buyurtma muvaffaqiyatli yuborildi!\nYana buyurtmangiz bormi?");
+                    const next = confirm("✅ Buyurtma yuborildi!\nYana buyurtma berasizmi?");
                     if(next) {
                         document.getElementById('material').value = '';
                         document.getElementById('edgeName').value = '';
@@ -257,7 +259,7 @@
                         for(let i=0; i<4; i++) addRow();
                     }
                 }
-            } catch (e) { alert("Xatolik yuz berdi! Internetni tekshiring."); }
+            } catch (e) { alert("Xatolik! Internetni tekshiring."); }
         }
     </script>
 </body>
