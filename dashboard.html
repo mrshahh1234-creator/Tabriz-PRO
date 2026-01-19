@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head><meta charset="UTF-8"><link rel="stylesheet" href="style.css"><title>Кабинет</title></head>
+<body>
+    <div class="sidebar">
+        <div class="brand">TABRIZ PRO</div>
+        <a href="dashboard.html" class="nav-item active">🏠 Асосий</a>
+        <a href="order.html" class="nav-item">➕ Янги Раскрой</a>
+        <a href="index.html" class="nav-item" style="margin-top:auto; color:red;">🚪 Чиқиш</a>
+    </div>
+
+    <div class="main">
+        <div class="glass-card">
+            <h1>Хуш келибсиз, <span id="uName" style="color:white"></span></h1>
+            <p>Мебель ишлаб чиқариш портали.</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
+                <div style="background: rgba(0,0,0,0.4); padding: 20px; border-radius: 10px; border: 1px solid var(--gold);">
+                    <small style="color:#aaa">Баланс:</small>
+                    <div style="font-size: 24px; color: var(--gold); font-weight: bold;">4,200,000 UZS</div>
+                </div>
+                <div style="background: rgba(0,0,0,0.4); padding: 20px; border-radius: 10px;">
+                    <small style="color:#aaa">Актив заказлар:</small>
+                    <div style="font-size: 24px; font-weight: bold;">0 та</div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="location.href='order.html'" style="width: auto; margin-top: 30px;">Янги буюртма бериш</button>
+        </div>
+    </div>
+
+    <div class="academy-watermark">MUSTAFAYEV ACADEMY</div>
+    <script>document.getElementById('uName').innerText = localStorage.getItem('uPhone');</script>
+</body>
+</html>
