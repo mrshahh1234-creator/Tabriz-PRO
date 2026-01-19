@@ -3,47 +3,27 @@
 <head><meta charset="UTF-8"><link rel="stylesheet" href="style.css"><title>Dashboard</title></head>
 <body>
     <div class="sidebar">
-        <div class="brand">TABRIZ PRO</div>
-        <a href="dashboard.html" class="nav-item active">📊 Асосий Панел</a>
-        <a href="order.html" class="nav-item">➕ Янги Раскрой</a>
-        <a href="index.html" class="nav-item" style="margin-top:auto; color: #ff4d4d; border:1px solid rgba(255,77,77,0.3);">🛑 Чиқиш</a>
+        <div class="brand">TABRIZ</div>
+        <a href="dashboard.html" class="nav-item active">👤 Профиль</a>
+        <a href="order.html" class="nav-item">📐 Янги Раскрой</a>
+        <a href="index.html" class="nav-item" style="margin-top: auto;">🚪 Чиқиш</a>
     </div>
-
     <div class="main">
         <div class="glass-card">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <h1 style="margin:0;">ХУШ КЕЛИБСИЗ</h1>
-                    <p style="color:#aaa; margin-top:5px;">ID: <span id="uName"></span></p>
+            <h2 style="font-weight: 300;">Хайрли кун, <span id="name" style="color:var(--gold); font-weight: 700;"></span></h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px;">
+                <div class="glass-card" style="padding: 25px; margin:0; background: rgba(255,255,255,0.02);">
+                    <div style="font-size: 14px; color: #71717A;">Жорий баланс</div>
+                    <div style="font-size: 32px; font-weight: 700; margin-top: 10px;">8,420,000 <small style="font-size: 14px;">UZS</small></div>
                 </div>
-                <div style="text-align: right;">
-                    <div style="color: var(--gold); font-size: 14px;">БУГУНГИ САНА</div>
-                    <div style="font-family: 'Orbitron'; font-size: 20px;">2026.01.19</div>
-                </div>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 25px; margin-top: 40px;">
-                <div style="background: rgba(255, 215, 0, 0.1); padding: 25px; border-radius: 15px; border: 1px solid rgba(255, 215, 0, 0.3);">
-                    <small style="color:var(--gold); text-transform: uppercase;">Ҳисобдаги маблағ</small>
-                    <div style="font-size: 32px; font-weight: bold; margin-top: 10px; font-family: 'Orbitron';">4,500,000</div>
-                    <small style="color:#aaa">сўм</small>
-                </div>
-
-                <div style="background: rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
-                    <small style="color:#fff; text-transform: uppercase;">Актив буюртмалар</small>
-                    <div style="font-size: 32px; font-weight: bold; margin-top: 10px; color: #00f3ff;">2 та</div>
-                    <small style="color:#aaa">Ишлаб чиқаришда</small>
-                </div>
-
-                <div style="background: rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer;" onclick="location.href='order.html'">
-                    <div style="font-size: 40px; color: var(--gold); text-align: center; margin-top: 5px;">+</div>
-                    <div style="text-align: center; font-weight: bold; margin-top: 5px;">Янги Заказ</div>
+                <div class="glass-card" style="padding: 25px; margin:0; cursor: pointer;" onclick="location.href='order.html'">
+                    <div style="color: var(--gold); font-weight: 700;">+ ЯНГИ БУЮРТМА</div>
+                    <div style="margin-top: 10px; font-size: 14px; color: #71717A;">Раскройни бошлаш учун босинг</div>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="academy-watermark">MUSTAFAYEV ACADEMY</div>
-    <script>document.getElementById('uName').innerText = localStorage.getItem('uPhone');</script>
+    <script>document.getElementById('name').innerText = localStorage.getItem('user');</script>
 </body>
 </html>
