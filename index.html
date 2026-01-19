@@ -3,26 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raspilnaya.pro | Заказ для мастеров</title>
+    <title>TABRIZ GROUP | Заказ для мастеров</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f1f5f9; }
-        .card { background: white; border-radius: 1.25rem; border: 1px solid #e2e8f0; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
-        .input-field { width: 100%; padding: 0.75rem; border-radius: 0.75rem; border: 1px solid #cbd5e1; outline: none; transition: 0.2s; }
-        .input-field:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+
+        /* Фоновое изображение */
+        .bg-furniture-workshop {
+            background-image: url('https://images.unsplash.com/photo-1602871212882-d27803a67500?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* Замените на ваше изображение */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Фиксированный фон */
+        }
+
+        /* Прозрачные карточки */
+        .card-transparent {
+            background-color: rgba(255, 255, 255, 0.15); /* Чуть-чуть белого для видимости */
+            backdrop-filter: blur(10px); /* Эффект размытия фона */
+            border-radius: 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3); /* Более заметная тень */
+            color: white; /* Цвет текста в карточках */
+        }
+        .card-transparent .input-field {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+        .card-transparent .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .card-transparent .input-field:focus {
+            border-color: #a78bfa; /* Фиолетовый фокус */
+            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.3);
+        }
+        .card-transparent label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .card-transparent h2, .card-transparent th {
+            color: white;
+        }
+        .card-transparent .val-name, .card-transparent .val-len,
+        .card-transparent .val-width, .card-transparent .val-count {
+            color: white;
+        }
+        .card-transparent .val-edge:checked + span {
+            background-color: #a78bfa; /* Фиолетовый чекбокс */
+            border-color: #a78bfa;
+        }
+        .card-transparent .text-blue-600 { color: #a78bfa; } /* Изменяем основной синий на фиолетовый */
+        .card-transparent .bg-blue-50 { background-color: rgba(167, 139, 250, 0.2); }
+        .card-transparent .hover\:bg-blue-100:hover { background-color: rgba(167, 139, 250, 0.4); }
+
+        .footer-text {
+            position: fixed;
+            bottom: 1rem;
+            right: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
     </style>
 </head>
-<body class="p-4 md:p-10">
+<body class="bg-furniture-workshop p-4 md:p-10 text-white">
 
     <div class="max-w-6xl mx-auto">
-        <header class="mb-10 text-center md:text-left flex flex-col md:flex-row justify-between items-end gap-4">
-            <div>
-                <h1 class="text-4xl font-black text-slate-900 tracking-tight">RASPILNAYA<span class="text-blue-600">.PRO</span></h1>
-                <p class="text-slate-500 mt-2 font-medium">Профессиональный прием заказов на распил и кромление</p>
+        <header class="mb-10 flex justify-between items-center bg-transparent">
+            <div class="flex items-center gap-4">
+                <img src="https://i.imgur.com/kO8zD5J.png" alt="TABRIZ GROUP Logo" class="h-16"> <h1 class="text-4xl font-extrabold tracking-tight">TABRIZ <span class="text-amber-300">GROUP</span></h1>
             </div>
-            <div class="bg-blue-600 text-white px-5 py-2 rounded-2xl text-sm font-bold shadow-lg shadow-blue-200">
+            <div class="bg-amber-300 text-slate-900 px-5 py-2 rounded-2xl text-sm font-bold shadow-lg shadow-amber-200">
                 Личный кабинет мастера
             </div>
         </header>
@@ -30,38 +82,38 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
             <div class="lg:col-span-1 space-y-6">
-                <div class="card p-6">
-                    <h2 class="text-lg font-bold mb-5 flex items-center gap-2 text-slate-800">
-                        <i class="fas fa-user-circle text-blue-600"></i> Данные мастера
+                <div class="card-transparent p-6">
+                    <h2 class="text-xl font-bold mb-5 flex items-center gap-3">
+                        <i class="fas fa-user-circle text-amber-300"></i> Данные мастера
                     </h2>
                     <div class="space-y-4">
                         <div>
-                            <label class="text-[11px] font-bold text-slate-400 uppercase ml-1">Имя и Фамилия</label>
-                            <input type="text" id="fullName" class="input-field mt-1" placeholder="Введите имя">
+                            <label class="text-xs font-bold uppercase ml-1">Имя и Фамилия</label>
+                            <input type="text" id="fullName" class="input-field mt-1" placeholder="Введите имя и фамилию">
                         </div>
                         <div>
-                            <label class="text-[11px] font-bold text-slate-400 uppercase ml-1">Телефон</label>
+                            <label class="text-xs font-bold uppercase ml-1">Телефон</label>
                             <input type="tel" id="phone" class="input-field mt-1" placeholder="+998901234567">
                         </div>
                     </div>
                 </div>
 
-                <div class="card p-6 bg-slate-900 text-white border-none shadow-xl">
-                    <h2 class="text-lg font-bold mb-5 flex items-center gap-2">
-                        <i class="fas fa-couch text-blue-400"></i> Характеристики заказа
+                <div class="card-transparent p-6">
+                    <h2 class="text-xl font-bold mb-5 flex items-center gap-3">
+                        <i class="fas fa-couch text-amber-300"></i> Характеристики заказа
                     </h2>
                     <div class="space-y-4">
                         <div>
-                            <label class="text-[11px] font-bold text-slate-500 uppercase">Материал основы</label>
-                            <input type="text" id="material" class="input-field mt-1 bg-slate-800 border-slate-700 text-white" placeholder="ЛДСП Дуб Вотан 18мм">
+                            <label class="text-xs font-bold uppercase">Материал основы</label>
+                            <input type="text" id="material" class="input-field mt-1" placeholder="ЛДСП Дуб Вотан 18мм">
                         </div>
                         <div>
-                            <label class="text-[11px] font-bold text-slate-500 uppercase">Наименование кромки</label>
-                            <input type="text" id="edgeName" class="input-field mt-1 bg-slate-800 border-slate-700 text-white" placeholder="ПВХ">
+                            <label class="text-xs font-bold uppercase">Наименование кромки</label>
+                            <input type="text" id="edgeName" class="input-field mt-1" placeholder="ПВХ">
                         </div>
                         <div>
-                            <label class="text-[11px] font-bold text-slate-500 uppercase">Толщина кромки</label>
-                            <select id="edgeThickness" class="input-field mt-1 bg-slate-800 border-slate-700 text-white">
+                            <label class="text-xs font-bold uppercase">Толщина кромки</label>
+                            <select id="edgeThickness" class="input-field mt-1">
                                 <option value="0.4мм">0.4 мм</option>
                                 <option value="1.0мм">1.0 мм</option>
                                 <option value="2.0мм">2.0 мм</option>
@@ -72,12 +124,12 @@
             </div>
 
             <div class="lg:col-span-2">
-                <div class="card p-8 min-h-full">
+                <div class="card-transparent p-8 min-h-full">
                     <div class="flex justify-between items-center mb-8">
-                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-3">
-                            <i class="fas fa-th-list text-blue-600"></i> Список деталей
+                        <h2 class="text-xl font-bold flex items-center gap-3">
+                            <i class="fas fa-th-list text-amber-300"></i> Список деталей
                         </h2>
-                        <button onclick="addRow()" class="bg-blue-50 text-blue-600 font-bold px-4 py-2 rounded-xl hover:bg-blue-100 transition flex items-center gap-2">
+                        <button onclick="addRow()" class="bg-amber-500 text-white font-bold px-4 py-2 rounded-xl hover:bg-amber-600 transition flex items-center gap-2">
                             <i class="fas fa-plus text-xs"></i> Добавить деталь
                         </button>
                     </div>
@@ -85,7 +137,7 @@
                     <div class="overflow-x-auto">
                         <table class="w-full">
                             <thead>
-                                <tr class="text-left text-[11px] font-black text-slate-400 uppercase tracking-widest border-b pb-4">
+                                <tr class="text-left text-[11px] font-black uppercase tracking-widest border-b border-white/30 pb-4">
                                     <th class="pb-4 px-2">Наименование</th>
                                     <th class="pb-4 px-2 w-24">Длина</th>
                                     <th class="pb-4 px-2 w-24">Ширина</th>
@@ -94,12 +146,12 @@
                                     <th class="pb-4 w-10"></th>
                                 </tr>
                             </thead>
-                            <tbody id="tableBody" class="divide-y divide-slate-50"></tbody>
+                            <tbody id="tableBody" class="divide-y divide-white/10"></tbody>
                         </table>
                     </div>
 
-                    <div class="mt-12 flex justify-end">
-                        <button onclick="sendToBot()" class="w-full md:w-auto bg-blue-600 text-white px-12 py-5 rounded-2xl font-black text-lg hover:bg-blue-700 transition shadow-2xl shadow-blue-200 flex items-center justify-center gap-4">
+                    <div class="mt-12 flex flex-col md:flex-row justify-end items-center gap-4">
+                        <button onclick="sendToBot()" class="w-full md:w-auto bg-amber-500 text-slate-900 px-12 py-5 rounded-2xl font-black text-lg hover:bg-amber-600 transition shadow-2xl shadow-amber-300 flex items-center justify-center gap-4">
                             <span>ОТПРАВИТЬ ЗАКАЗ</span>
                             <i class="fas fa-paper-plane"></i>
                         </button>
@@ -109,19 +161,24 @@
         </div>
     </div>
 
+    <div class="footer-text">
+        MUSTAFAYEV ACADEMY
+    </div>
+
     <script>
         const BOT_TOKEN = '7927717291:AAG4h_LbZoY-1s2y0_zzNoCFudrU7pPDNas';
         const CHAT_ID = '1015769230';
+        const LOGO_URL = 'https://i.imgur.com/kO8zD5J.png'; // Ваш логотип для Telegram
 
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('fullName').value = localStorage.getItem('m_name') || '';
             document.getElementById('phone').value = localStorage.getItem('m_phone') || '';
-            for(let i=0; i<3; i++) addRow();
+            for(let i=0; i<3; i++) addRow(); // Добавляем 3 пустые строки по умолчанию
         });
 
         function addRow() {
             const tr = document.createElement('tr');
-            tr.className = "group hover:bg-blue-50/30 transition";
+            tr.className = "group hover:bg-white/10 transition";
             tr.innerHTML = `
                 <td class="py-4 px-2"><input type="text" class="w-full bg-transparent outline-none font-medium val-name" placeholder="Напр: Фасад"></td>
                 <td class="py-4 px-2"><input type="number" class="w-full bg-transparent outline-none font-bold val-len" placeholder="0"></td>
@@ -132,59 +189,85 @@
                         ${['L1', 'L2', 'W1', 'W2'].map(e => `
                             <label class="cursor-pointer">
                                 <input type="checkbox" value="${e}" class="hidden peer val-edge">
-                                <span class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 text-[10px] font-bold text-slate-400 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 transition-all">${e}</span>
+                                <span class="w-8 h-8 flex items-center justify-center rounded-lg border border-white/30 text-[10px] font-bold text-white/70 peer-checked:bg-amber-500 peer-checked:text-slate-900 peer-checked:border-amber-500 transition-all">${e}</span>
                             </label>
                         `).join('')}
                     </div>
                 </td>
                 <td class="py-4 text-right">
-                    <button onclick="this.parentElement.parentElement.remove()" class="text-slate-300 hover:text-red-500 transition"><i class="fas fa-trash-alt"></i></button>
+                    <button onclick="this.parentElement.parentElement.remove()" class="text-white/30 hover:text-red-400 transition"><i class="fas fa-trash-alt"></i></button>
                 </td>
             `;
             document.getElementById('tableBody').appendChild(tr);
         }
 
         async function sendToBot() {
-            const name = document.getElementById('fullName').value;
-            const phone = document.getElementById('phone').value;
-            const mat = document.getElementById('material').value;
-            const eName = document.getElementById('edgeName').value;
-            const eThick = document.getElementById('edgeThickness').value;
+            const name = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const mat = document.getElementById('material').value.trim();
+            const eName = document.getElementById('edgeName').value.trim();
+            const eThick = document.getElementById('edgeThickness').value.trim();
 
-            if (!name || !phone || !mat) return alert('Пожалуйста, заполните данные мастера и материал!');
+            if (!name || !phone || !mat) {
+                alert('Пожалуйста, заполните Имя, Телефон и Материал основы.');
+                return;
+            }
 
+            // Сохраняем данные мастера
             localStorage.setItem('m_name', name);
             localStorage.setItem('m_phone', phone);
 
             const details = Array.from(document.querySelectorAll('#tableBody tr')).map(row => ({
-                n: row.querySelector('.val-name').value,
-                l: row.querySelector('.val-len').value,
-                w: row.querySelector('.val-width').value,
-                c: row.querySelector('.val-count').value,
+                n: row.querySelector('.val-name').value.trim(),
+                l: row.querySelector('.val-len').value.trim(),
+                w: row.querySelector('.val-width').value.trim(),
+                c: row.querySelector('.val-count').value.trim(),
                 e: Array.from(row.querySelectorAll('.val-edge:checked')).map(cb => cb.value)
-            })).filter(d => d.n && d.l && d.w);
+            })).filter(d => d.n && d.l && d.w && d.c); // Фильтруем пустые строки
 
-            if (details.length === 0) return alert('Добавьте хотя бы одну деталь с размерами!');
+            if (details.length === 0) {
+                alert('Добавьте хотя бы одну заполненную деталь в список.');
+                return;
+            }
 
-            let text = `🚀 *НОВЫЙ ЗАКАЗ*\n\n`;
+            let text = `✨ *НОВЫЙ ЗАКАЗ ОТ TABRIZ GROUP* ✨\n\n`;
             text += `👤 *Мастер:* ${name}\n`;
             text += `📞 *Телефон:* [${phone}](tel:${phone})\n`;
-            text += `🪵 *Материал:* ${mat}\n`;
+            text += `\n*Характеристики заказа:*\n`;
+            text += `🪵 *Материал основы:* ${mat}\n`;
             text += `🧵 *Кромка:* ${eName} (${eThick})\n`;
             text += `───────────────────\n\n`;
 
+            text += `*Детали для распила:*\n`;
             details.forEach((d, i) => {
-                text += `${i + 1}. *${d.n}*\n   📏 ${d.l} x ${d.w} — *${d.c} шт.*\n   📍 Кромка: ${d.e.length > 0 ? d.e.join(', ') : 'нет'}\n\n`;
+                text += `\`${i + 1}. ${d.n}\`\n`;
+                text += `   📐 ${d.l} x ${d.w} мм — *${d.c} шт.*\n`;
+                text += `   📍 Кромка: ${d.e.length > 0 ? d.e.join(', ') : 'нет'}\n\n`;
             });
 
+            // Отправка в Telegram
             try {
-                const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: 'Markdown' })
                 });
-                if (res.ok) alert('Заказ успешно отправлен в raspilnaya_bot!');
-            } catch (err) { alert('Ошибка сети!'); }
+
+                if (response.ok) {
+                    alert('✅ Заказ успешно отправлен! Есть ли у вас еще заказы? Если да, заполните новую форму.');
+                    // Очищаем форму для нового заказа, сохраняя данные мастера
+                    document.getElementById('material').value = '';
+                    document.getElementById('edgeName').value = '';
+                    document.getElementById('edgeThickness').value = '0.4мм';
+                    document.getElementById('tableBody').innerHTML = ''; // Очищаем детали
+                    for(let i=0; i<3; i++) addRow(); // Добавляем 3 пустые строки
+                } else {
+                    const errorData = await response.json();
+                    alert(`❌ Ошибка при отправке заказа в Telegram: ${errorData.description || 'Неизвестная ошибка'}`);
+                }
+            } catch (err) {
+                alert('❌ Ошибка сети! Проверьте подключение к интернету.');
+            }
         }
     </script>
 </body>
