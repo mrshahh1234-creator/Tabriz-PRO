@@ -1,354 +1,169 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TABRIZ | Mustafayev Academy</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    
+    <title>Raspilnaya | Система приема заказов</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root {
-            --gold: #C5A059;
-            --bg: #0D0F14;
-            --glass: rgba(25, 28, 35, 0.85);
-            --border: rgba(197, 160, 89, 0.2);
-            --accent: #00F2FF;
-        }
-
-        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.3s ease; }
-        body { margin: 0; background: var(--bg); color: white; overflow-x: hidden; }
-
-        /* Background Aura */
-        body::before {
-            content: ""; position: fixed; width: 100vw; height: 100vh;
-            background: radial-gradient(circle at 10% 20%, rgba(197, 160, 89, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 90% 80%, rgba(0, 242, 255, 0.03) 0%, transparent 50%);
-            z-index: -1;
-        }
-
-        .screen { display: none; padding: 40px; max-width: 1200px; margin: 0 auto; animation: fadeIn 0.5s ease; }
-        .screen.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* UI Elements */
-        .glass-card {
-            background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border);
-            border-radius: 24px; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-
-        .btn {
-            background: var(--gold); color: black; border: none; padding: 15px 30px;
-            border-radius: 12px; font-weight: 800; cursor: pointer; text-transform: uppercase;
-            letter-spacing: 1px; width: 100%; margin-top: 15px;
-        }
-        .btn:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(197, 160, 89, 0.4); }
-        .btn-outline { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
-
-        input, select {
-            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            padding: 15px; border-radius: 12px; color: white; margin-top: 8px; font-size: 16px;
-        }
-
-        /* Sidebar & Navigation */
-        nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .nav-brand { font-weight: 800; color: var(--gold); font-size: 24px; letter-spacing: 2px; }
-
-        /* Custom Table */
-        .parts-table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
-        .parts-table th { color: var(--gold); text-align: left; padding: 10px; font-size: 12px; }
-        .parts-table td { background: rgba(255,255,255,0.03); padding: 15px; border-top: 1px solid var(--border); }
-
-        /* Watermark */
-        .watermark { position: fixed; bottom: 20px; right: 20px; color: var(--gold); opacity: 0.3; font-weight: 800; font-size: 14px; letter-spacing: 3px; }
-
-        /* Nesting Visualizer */
-        canvas { background: white; border-radius: 16px; width: 100%; margin-top: 20px; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .input-focus { transition: all 0.2s; }
+        .input-focus:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); outline: none; }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900">
 
-    <div class="watermark">MUSTAFAYEV ACADEMY</div>
-
-    <div id="scr-auth" class="screen active">
-        <div style="height: 80vh; display: flex; align-items: center; justify-content: center;">
-            <div class="glass-card" style="width: 400px; text-align: center;">
-                <div class="nav-brand" style="margin-bottom: 10px;">TABRIZ GROUP</div>
-                <p style="color: #888; font-size: 14px;">B2B Ишлаб чиқариш портали</p>
-                <input type="tel" id="auth-phone" placeholder="+998 90 123 45 67">
-                <button class="btn" onclick="showScreen('dashboard')">Кириш</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="scr-dashboard" class="screen">
-        <nav>
-            <div class="nav-brand">TABRIZ</div>
-            <div style="display: flex; gap: 15px;">
-                <button class="btn-outline" style="padding: 10px 20px; border-radius: 8px; cursor: pointer;" onclick="showScreen('account')">👤 Профиль</button>
-                <button class="btn-outline" style="padding: 10px 20px; border-radius: 8px; cursor: pointer;" onclick="showScreen('help')">❓ Ёрдам</button>
+    <div class="min-h-screen pb-12">
+        <nav class="bg-white border-b border-slate-200 px-6 py-4 mb-8">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <div class="bg-blue-600 p-2 rounded-lg text-white">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight">RASPILNAYA<span class="text-blue-600">.PRO</span></span>
+                </div>
+                <div class="text-sm text-slate-500 font-medium">Кабинет мастера</div>
             </div>
         </nav>
 
-        <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px;">
-            <div>
-                <div class="glass-card">
-                    <h2>Янги Буюртма</h2>
-                    <p style="color:#888;">Раскрой ҳисоблаш ва цехга юбориш</p>
-                    <button class="btn" onclick="showScreen('new-order')">➕ Қўшиш</button>
+        <main class="max-w-7xl mx-auto px-4">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50">
+                    <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-file-invoice text-blue-600"></i> Основная информация
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Мастер / Компания</label>
+                            <input type="text" id="master" class="w-full p-3 bg-white border border-slate-200 rounded-xl input-focus" placeholder="ФИО или Название">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Материал (ЛДСП/МДФ)</label>
+                            <input type="text" id="material" class="w-full p-3 bg-white border border-slate-200 rounded-xl input-focus" placeholder="Egger Дуб Галифакс 18мм">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Название кромки</label>
+                                <input type="text" id="edgeName" class="w-full p-3 bg-white border border-slate-200 rounded-xl input-focus" placeholder="ПВХ Rehau">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Толщина кромки</label>
+                                <select id="edgeThickness" class="w-full p-3 bg-white border border-slate-200 rounded-xl input-focus">
+                                    <option value="0.4мм">0.4 мм</option>
+                                    <option value="1.0мм">1.0 мм</option>
+                                    <option value="2.0мм">2.0 мм</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-ruler-combined text-blue-600"></i> Спецификация деталей
+                    </h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-left text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100">
+                                    <th class="pb-4 px-2">Наименование детали</th>
+                                    <th class="pb-4 px-2 w-32">Длина (мм)</th>
+                                    <th class="pb-4 px-2 w-32">Ширина (мм)</th>
+                                    <th class="pb-4 px-2 w-24">Кол-во</th>
+                                    <th class="pb-4 px-2 text-center">Стороны кромки</th>
+                                    <th class="pb-4 px-2 w-16 text-right"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                </tbody>
+                        </table>
+                    </div>
+
+                    <button onclick="addRow()" class="mt-6 flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition">
+                        <i class="fas fa-plus-circle"></i> Добавить еще одну деталь
+                    </button>
+                </div>
+
+                <div class="p-6 bg-slate-50 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-sm text-slate-500 italic">
+                        * Проверьте размеры перед отправкой. Все данные сохраняются в вашем профиле.
+                    </p>
+                    <button onclick="sendToBot()" class="w-full md:w-auto bg-blue-600 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-200 transition-all flex items-center justify-center gap-3">
+                        <span>Отправить в производство</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
                 </div>
             </div>
-            <div class="glass-card">
-                <h3>Сўнгги заказилар</h3>
-                <div id="history-list" style="color:#aaa; font-size: 14px;">Буюртмалар мавжуд эмас.</div>
-            </div>
-        </div>
-    </div>
-
-    <div id="scr-account" class="screen">
-        <div class="glass-card" style="max-width: 600px; margin: 0 auto;">
-            <h2>Аккаунт Созламалари</h2>
-            <label>Исм:</label>
-            <input type="text" id="acc-name" value="Мебель Уста">
-            <label style="margin-top: 15px; display: block;">Телефон (Верификация):</label>
-            <div style="display: flex; gap: 10px;">
-                <input type="tel" id="acc-phone" value="+998901234567">
-                <button class="btn" style="width: auto; margin: 0;" onclick="verifyPhone()">Тасдиқлаш</button>
-            </div>
-            <p id="verify-status" style="font-size: 12px; color: var(--gold); margin-top: 10px;">Телефон тасдиқланмаган. @raspilnaya_bot орқали код олинг.</p>
-            <button class="btn-outline" style="margin-top: 40px; padding: 15px; width: 100%; border-radius: 12px; cursor: pointer;" onclick="showScreen('dashboard')">⬅️ Орқага</button>
-        </div>
-    </div>
-
-    <div id="scr-help" class="screen">
-        <div class="glass-card" style="max-width: 600px; margin: 0 auto; text-align: center;">
-            <h2>Ёрдам Маркази</h2>
-            <div style="margin: 30px 0;">
-                <p>Техник қўллаб-қувватлаш:</p>
-                <a href="https://t.me/shaxzod_mustafayev" style="color: var(--accent); font-size: 20px; text-decoration: none;">@shaxzod_mustafayev</a>
-            </div>
-            <div style="margin: 30px 0;">
-                <p>Телефон:</p>
-                <a href="tel:+998915329836" style="color: var(--gold); font-size: 20px; text-decoration: none;">+998 91 532 98 36</a>
-                <p style="font-weight: 800;">Шахзод</p>
-            </div>
-            <button class="btn" onclick="showScreen('dashboard')">Орқага</button>
-        </div>
-    </div>
-
-    <div id="scr-new-order" class="screen">
-        <div class="glass-card" style="max-width: 800px; margin: 0 auto;">
-            <h2>Буюртма Параметрлари</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div><label>Материал номи</label><input type="text" id="mat-name" placeholder="ЛДСП Империал"></div>
-                <div><label>Лист ўлчами (L x W)</label><input type="text" id="sheet-size" placeholder="2800x2070"></div>
-                <div><label>Кромка қалинлиги (мм)</label><input type="number" id="edge-thick" value="1"></div>
-                <div><label>Кромка номи</label><input type="text" id="edge-name" placeholder="ПВХ 0.45"></div>
-            </div>
-            <button class="btn" onclick="setupOrderDetails()">Кейинги қадам ⮕</button>
-        </div>
-    </div>
-
-    <div id="scr-order-details" class="screen">
-        <div class="glass-card">
-            <h2>Деталлар Ўлчами</h2>
-            <table class="parts-table" id="parts-input-table">
-                <thead>
-                    <tr><th>Номи</th><th>Узунлик (L)</th><th>Эни (W)</th><th>Сони</th><th>Кромка (L1/L2/W1/W2)</th><th>🔒 Бураш</th><th></th></tr>
-                </thead>
-                <tbody id="parts-body"></tbody>
-            </table>
-            <button class="btn-outline" style="width: auto; padding: 10px 20px; border-radius: 8px; cursor: pointer;" onclick="addPartRow()">+ Детал қўшиш</button>
-            <button class="btn" onclick="runOptimization()">Раскройни Ҳисоблаш 🚀</button>
-        </div>
-    </div>
-
-    <div id="scr-nesting-result" class="screen">
-        <div class="glass-card">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h2>Оптимизация Натижаси</h2>
-                <div style="display: flex; gap: 10px;">
-                    <button class="btn" style="width: auto; margin: 0; background: #222; color: white; border: 1px solid #444;" onclick="exportPDF()">📄 PDF</button>
-                    <button class="btn" style="width: auto; margin: 0;" onclick="sendToBot()">🚀 Ботга Юбориш</button>
-                </div>
-            </div>
-            
-            <div id="canvas-container"></div>
-            
-            <div id="result-stats" style="margin-top: 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-                </div>
-            <button class="btn-outline" style="margin-top: 30px; padding: 15px; width: 100%; border-radius: 12px; cursor: pointer;" onclick="showScreen('dashboard')">🏠 Бош саҳифага қайтиш</button>
-        </div>
+        </main>
     </div>
 
     <script>
-        // GLOBAL STATE
-        let currentOrder = {
-            mat: '',
-            sheetW: 0,
-            sheetH: 0,
-            edgeName: '',
-            edgeThick: 0,
-            parts: []
-        };
-
-        // NAVIGATION
-        function showScreen(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById('scr-' + id).classList.add('active');
-            window.scrollTo(0, 0);
-        }
-
-        // AUTH & ACCOUNT
-        function verifyPhone() {
-            const phone = document.getElementById('acc-phone').value;
-            alert(`Код @raspilnaya_bot орқали ${phone} рақамига юборилди.`);
-            document.getElementById('verify-status').innerText = "✅ Телефон тасдиқланди";
-            document.getElementById('verify-status').style.color = "#22c55e";
-        }
-
-        // ORDER SETUP
-        function setupOrderDetails() {
-            currentOrder.mat = document.getElementById('mat-name').value;
-            const size = document.getElementById('sheet-size').value.split('x');
-            currentOrder.sheetW = parseInt(size[0]);
-            currentOrder.sheetH = parseInt(size[1]);
-            currentOrder.edgeName = document.getElementById('edge-name').value;
-            currentOrder.edgeThick = parseInt(document.getElementById('edge-thick').value);
-            
-            if(!currentOrder.sheetW || !currentOrder.sheetH) return alert("Лист ўлчамини тўғри киритинг!");
-            
-            addPartRow();
-            showScreen('order-details');
-        }
-
-        function addPartRow() {
-            const tbody = document.getElementById('parts-body');
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><input type="text" class="p-name" value="Детал ${tbody.children.length + 1}"></td>
-                <td><input type="number" class="p-l" value="600"></td>
-                <td><input type="number" class="p-w" value="400"></td>
-                <td><input type="number" class="p-q" value="1"></td>
-                <td>
-                    <div style="display:flex; gap:3px;">
-                        <input type="checkbox" class="p-e1" title="L1"> <input type="checkbox" class="p-e2" title="L2"> | 
-                        <input type="checkbox" class="p-e3" title="W1"> <input type="checkbox" class="p-e4" title="W2">
+        function addRow() {
+            const tbody = document.getElementById('tableBody');
+            const row = document.createElement('tr');
+            row.className = "group border-b border-slate-50 hover:bg-slate-50/50 transition";
+            row.innerHTML = `
+                <td class="py-4 px-2"><input type="text" class="w-full bg-transparent border-b border-transparent group-hover:border-slate-300 focus:border-blue-500 outline-none p-1 val-name" placeholder="Напр: Боковина шкафа"></td>
+                <td class="py-4 px-2"><input type="number" class="w-full bg-transparent border-b border-transparent group-hover:border-slate-300 focus:border-blue-500 outline-none p-1 val-len" placeholder="0"></td>
+                <td class="py-4 px-2"><input type="number" class="w-full bg-transparent border-b border-transparent group-hover:border-slate-300 focus:border-blue-500 outline-none p-1 val-width" placeholder="0"></td>
+                <td class="py-4 px-2"><input type="number" class="w-full bg-transparent border-b border-transparent group-hover:border-slate-300 focus:border-blue-500 outline-none p-1 val-count" placeholder="1"></td>
+                <td class="py-4 px-2">
+                    <div class="flex justify-center gap-2">
+                        ${['L1', 'L2', 'W1', 'W2'].map(edge => `
+                            <label class="flex flex-col items-center cursor-pointer group/edge">
+                                <input type="checkbox" value="${edge}" class="hidden peer val-edge">
+                                <span class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-[10px] font-bold peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 transition-all">${edge}</span>
+                            </label>
+                        `).join('')}
                     </div>
                 </td>
-                <td style="text-align:center;"><input type="checkbox" class="p-lock"></td>
-                <td onclick="this.parentElement.remove()" style="cursor:pointer; color:red;">✕</td>
+                <td class="py-4 px-2 text-right">
+                    <button onclick="this.parentElement.parentElement.remove()" class="text-slate-300 hover:text-red-500 transition"><i class="fas fa-trash"></i></button>
+                </td>
             `;
-            tbody.appendChild(tr);
+            tbody.appendChild(row);
         }
 
-        // NESTING ENGINE (MaxRects Style Simulation)
-        function runOptimization() {
-            currentOrder.parts = [];
-            document.querySelectorAll('#parts-body tr').forEach(tr => {
-                const q = parseInt(tr.querySelector('.p-q').value);
-                for(let i=0; i<q; i++) {
-                    currentOrder.parts.push({
-                        name: tr.querySelector('.p-name').value,
-                        l: parseInt(tr.querySelector('.p-l').value),
-                        w: parseInt(tr.querySelector('.p-w').value),
-                        edges: [
-                            tr.querySelector('.p-e1').checked, tr.querySelector('.p-e2').checked,
-                            tr.querySelector('.p-e3').checked, tr.querySelector('.p-e4').checked
-                        ],
-                        lock: tr.querySelector('.p-lock').checked
+        async function sendToBot() {
+            const data = {
+                master: document.getElementById('master').value,
+                material: document.getElementById('material').value,
+                edgeName: document.getElementById('edgeName').value,
+                edgeThickness: document.getElementById('edgeThickness').value,
+                details: []
+            };
+
+            document.querySelectorAll('#tableBody tr').forEach(row => {
+                const name = row.querySelector('.val-name').value;
+                if (name) {
+                    data.details.push({
+                        name,
+                        len: row.querySelector('.val-len').value,
+                        width: row.querySelector('.val-width').value,
+                        count: row.querySelector('.val-count').value,
+                        edges: Array.from(row.querySelectorAll('.val-edge:checked')).map(el => el.value)
                     });
                 }
             });
 
-            visualizeNesting();
-            showScreen('nesting-result');
+            if(!data.master || data.details.length === 0) return alert("Пожалуйста, заполните имя и детали");
+
+            // Сохранение в localStorage (имитация сохранения в приложении)
+            localStorage.setItem('lastOrder', JSON.stringify(data));
+
+            const response = await fetch('http://localhost:3000/api/send-order', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+
+            if(response.ok) alert("Заказ успешно отправлен!");
         }
 
-        function visualizeNesting() {
-            const container = document.getElementById('canvas-container');
-            container.innerHTML = "";
-            
-            const kerf = 4; // Арра қалинлиги
-            let partsToPlace = [...currentOrder.parts].sort((a,b) => (b.l * b.w) - (a.l * a.w));
-            let sheetIdx = 0;
-
-            while(partsToPlace.length > 0) {
-                sheetIdx++;
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const scale = 0.25; 
-                canvas.width = currentOrder.sheetW * scale;
-                canvas.height = currentOrder.sheetH * scale;
-                
-                ctx.fillStyle = "white"; ctx.fillRect(0,0, canvas.width, canvas.height);
-                
-                let cx = 5, cy = 5, rh = 0;
-                let nextRound = [];
-
-                partsToPlace.forEach(p => {
-                    let w = p.l, h = p.w;
-                    
-                    // Поворот текшириш
-                    if(!p.lock && (cx + h <= currentOrder.sheetW - 5) && (cy + w <= currentOrder.sheetH - 5) && h > w) {
-                        [w, h] = [h, w];
-                    }
-
-                    if(cx + w > currentOrder.sheetW - 5) { cx = 5; cy += rh + kerf; rh = 0; }
-                    
-                    if(cy + h > currentOrder.sheetH - 5) {
-                        nextRound.push(p);
-                        return;
-                    }
-
-                    // Draw Part
-                    ctx.fillStyle = "#f0f2f5";
-                    ctx.fillRect(cx*scale, cy*scale, w*scale, h*scale);
-                    ctx.strokeStyle = "#444"; ctx.lineWidth = 0.5;
-                    ctx.strokeRect(cx*scale, cy*scale, w*scale, h*scale);
-
-                    // Draw Edges (Yellow line)
-                    ctx.strokeStyle = "gold"; ctx.lineWidth = 2;
-                    if(p.edges[0]) { ctx.beginPath(); ctx.moveTo(cx*scale, cy*scale); ctx.lineTo((cx+w)*scale, cy*scale); ctx.stroke(); }
-                    if(p.edges[1]) { ctx.beginPath(); ctx.moveTo(cx*scale, (cy+h)*scale); ctx.lineTo((cx+w)*scale, (cy+h)*scale); ctx.stroke(); }
-                    
-                    // Labels
-                    ctx.fillStyle = "black"; ctx.font = "8px Arial";
-                    if(w > 100) ctx.fillText(`${p.name}`, (cx+5)*scale, (cy+15)*scale);
-                    if(w > 100) ctx.fillText(`${p.l}x${p.w}`, (cx+5)*scale, (cy+30)*scale);
-
-                    cx += w + kerf;
-                    rh = Math.max(rh, h);
-                });
-
-                container.appendChild(canvas);
-                partsToPlace = nextRound;
-            }
-
-            document.getElementById('result-stats').innerHTML = `
-                <div class="glass-card" style="padding:15px; text-align:center;">Лист сони: ${sheetIdx}</div>
-                <div class="glass-card" style="padding:15px; text-align:center;">Материал: ${currentOrder.mat}</div>
-                <div class="glass-card" style="padding:15px; text-align:center;">Кромка: ${currentOrder.edgeName}</div>
-            `;
-        }
-
-        // EXPORT & SOCIAL
-        async function exportPDF() {
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF('l', 'mm', 'a4');
-            const canvas = await html2canvas(document.getElementById('canvas-container'));
-            const imgData = canvas.toDataURL('image/png');
-            pdf.text(`Order: ${currentOrder.mat} | Mustafayev Academy`, 10, 10);
-            pdf.addImage(imgData, 'PNG', 10, 20, 280, 150);
-            pdf.save("raskroy_tabriz.pdf");
-        }
-
-        async function sendToBot() {
-            alert("Маълумотлар @raspilnaya_bot га юборилди. Буюртма №" + Math.floor(Math.random()*9000));
-            showScreen('dashboard');
-        }
-
+        // Инициализация первой строки
+        addRow();
     </script>
 </body>
 </html>
