@@ -1,22 +1,158 @@
 <!DOCTYPE html>
 <html lang="uz">
-<head><meta charset="UTF-8"><link rel="stylesheet" href="style.css"><title>B2B Portal</title></head>
-<body style="align-items: center; justify-content: center;">
-    <div class="glass-card" style="width: 450px; text-align: center;">
-        <div style="font-size: 12px; color: var(--gold); letter-spacing: 4px; margin-bottom: 10px;">WELCOME TO</div>
-        <h1 style="margin: 0 0 40px 0; font-weight: 300; letter-spacing: 2px;">TABRIZ <b style="font-weight: 800; color: var(--gold);">GROUP</b></h1>
+<head>
+    <meta charset="UTF-8">
+    <title>TABRIZ B2B | PRO NESTING</title>
+    <style>
+        :root { --gold: #C5A059; --bg: #0A0C10; --card: rgba(25, 28, 35, 0.8); }
+        body { 
+            background: var(--bg); color: white; font-family: sans-serif; margin: 0; padding: 20px;
+            background-image: radial-gradient(circle at center, #1a1c24 0%, #0a0c10 100%);
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .glass-card { 
+            background: var(--card); padding: 30px; border-radius: 20px; 
+            border: 1px solid rgba(197, 160, 89, 0.2); backdrop-filter: blur(10px);
+        }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        input { background: #111; border: 1px solid #444; color: white; padding: 10px; width: 80px; border-radius: 5px; }
+        .btn { 
+            background: var(--gold); color: black; padding: 15px 30px; border: none; 
+            border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; font-size: 16px;
+        }
+        canvas { background: white; border-radius: 10px; margin-top: 20px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .sheet-info { margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 10px; border-left: 4px solid var(--gold); }
+        .academy { position: fixed; bottom: 20px; right: 20px; opacity: 0.3; letter-spacing: 2px; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="glass-card">
+        <h2 style="color:var(--gold); margin-top:0;">📐 ПРОФЕССИОНАЛ РАСКРОЙ</h2>
         
-        <input type="tel" id="uPhone" placeholder="Телефон рақам">
-        <button class="btn" onclick="login()">ПОРТАЛГА КИРИШ</button>
+        <div style="display:flex; gap:20px; margin-bottom:20px;">
+            <div>Лист: <select id="matSize" style="padding:10px; border-radius:5px;"><option value="2800,2070">2800 x 2070</option><option value="2800,1220">2800 x 1220</option></select></div>
+            <div>Арра: <input type="number" id="kerf" value="4"> мм</div>
+        </div>
+
+        <table id="partsTable">
+            <thead>
+                <tr><th>Узунлик (L)</th><th>Эни (W)</th><th>Сони</th><th></th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="number" class="l" value="800"></td>
+                    <td><input type="number" class="w" value="500"></td>
+                    <td><input type="number" class="q" value="10"></td>
+                    <td><button onclick="this.parentElement.parentElement.remove()" style="color:red; background:none; border:none; cursor:pointer;">✕</button></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <button onclick="addRow()" style="background:none; border:1px solid var(--gold); color:var(--gold); padding:10px; cursor:pointer; border-radius:5px; margin-bottom:10px;">+ Қатор қўшиш</button>
+        <button class="btn" onclick="runNesting()">ҲИСОБЛАШНИ БОШЛАШ</button>
     </div>
-    <div class="academy-watermark">MUSTAFAYEV ACADEMY</div>
-    <script>
-        function login() {
-            if(document.getElementById('uPhone').value.length > 5) {
-                localStorage.setItem('user', document.getElementById('uPhone').value);
-                window.location.href='dashboard.html';
+
+    <div id="results"></div>
+</div>
+
+<div class="academy">MUSTAFAYEV ACADEMY</div>
+
+<script>
+function addRow() {
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td><input type="number" class="l" value="600"></td><td><input type="number" class="w" value="400"></td><td><input type="number" class="q" value="5"></td><td><button onclick="this.parentElement.parentElement.remove()" style="color:red; background:none; border:none; cursor:pointer;">✕</button></td>';
+    document.querySelector('#partsTable tbody').appendChild(tr);
+}
+
+function runNesting() {
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = "";
+    
+    const [sheetW, sheetH] = document.getElementById('matSize').value.split(',').map(Number);
+    const kerf = parseInt(document.getElementById('kerf').value);
+    
+    let allParts = [];
+    document.querySelectorAll('#partsTable tbody tr').forEach(tr => {
+        const l = parseInt(tr.querySelector('.l').value);
+        const w = parseInt(tr.querySelector('.w').value);
+        const q = parseInt(tr.querySelector('.q').value);
+        for(let i=0; i<q; i++) allParts.push({l, w});
+    });
+
+    // Сортировка (энг катталари олдин)
+    allParts.sort((a, b) => (b.l * b.w) - (a.l * a.w));
+
+    let sheets = [];
+    
+    while(allParts.length > 0) {
+        let currentSheetParts = [];
+        let freeSpaces = [{x: 0, y: 0, w: sheetW, h: sheetH}];
+
+        for (let i = 0; i < allParts.length; i++) {
+            let p = allParts[i];
+            let placed = false;
+
+            for (let j = 0; j < freeSpaces.length; j++) {
+                let space = freeSpaces[j];
+
+                // Сиғишини текшириш (айлантиришни ҳам ҳисобга оламиз)
+                let canFitNormal = p.l <= space.w && p.w <= space.h;
+                let canFitRotated = p.w <= space.w && p.l <= space.h;
+
+                if (canFitNormal || canFitRotated) {
+                    let finalL = p.l, finalW = p.w;
+                    if (!canFitNormal && canFitRotated) { finalL = p.w; finalW = p.l; }
+
+                    currentSheetParts.push({x: space.x, y: space.y, w: finalL, h: finalW});
+                    
+                    // Бўш жойни бўлиш (Guillotine cut)
+                    let remainingRight = {x: space.x + finalL + kerf, y: space.y, w: space.w - finalL - kerf, h: finalW};
+                    let remainingBottom = {x: space.x, y: space.y + finalW + kerf, w: space.w, h: space.h - finalW - kerf};
+                    
+                    freeSpaces.splice(j, 1);
+                    if (remainingRight.w > 0 && remainingRight.h > 0) freeSpaces.push(remainingRight);
+                    if (remainingBottom.w > 0 && remainingBottom.h > 0) freeSpaces.push(remainingBottom);
+                    
+                    allParts.splice(i, 1);
+                    i--;
+                    placed = true;
+                    break;
+                }
             }
         }
-    </script>
+        sheets.push(currentSheetParts);
+    }
+
+    // Натижани чизиш
+    sheets.forEach((sheet, index) => {
+        const info = document.createElement('div');
+        info.className = 'sheet-info';
+        info.innerHTML = `<b>ЛИСТ №${index + 1}</b> - Жойланган деталлар: ${sheet.length} та`;
+        resultsDiv.appendChild(info);
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const scale = 1000 / sheetW; 
+        canvas.width = sheetW * scale;
+        canvas.height = sheetH * scale;
+        
+        ctx.fillStyle = "white"; ctx.fillRect(0,0, canvas.width, canvas.height);
+        
+        sheet.forEach(p => {
+            ctx.fillStyle = "#e2e8f0";
+            ctx.fillRect(p.x * scale, p.y * scale, p.w * scale, p.h * scale);
+            ctx.strokeStyle = "#000"; ctx.lineWidth = 1;
+            ctx.strokeRect(p.x * scale, p.y * scale, p.w * scale, p.h * scale);
+            
+            ctx.fillStyle = "#000";
+            ctx.font = "12px Arial";
+            if(p.w > 100) ctx.fillText(`${p.w}x${p.h}`, (p.x + 5)*scale, (p.y + 20)*scale);
+        });
+        resultsDiv.appendChild(canvas);
+    });
+}
+</script>
 </body>
 </html>
