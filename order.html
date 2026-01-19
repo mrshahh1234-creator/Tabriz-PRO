@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head><meta charset="UTF-8"><link rel="stylesheet" href="style.css"><title>Янги Заказ</title></head>
+<body>
+    <div class="sidebar">
+        <div class="brand">TABRIZ PRO</div>
+        <a href="dashboard.html" class="nav-item">🏠 Асосий</a>
+        <a href="order.html" class="nav-item active">➕ Янги Раскрой</a>
+    </div>
+
+    <div class="main">
+        <div class="glass-card">
+            <h2>ПАРАМЕТРЛАР</h2>
+            <div style="display:flex; gap:20px;">
+                <select id="mat"><option value="2800x2070">ЛДСП (2800x2070)</option><option value="2800x1220">МДФ (2800x1220)</option></select>
+                <input type="number" id="kerf" value="4" placeholder="Арра (мм)" style="width:100px">
+            </div>
+
+            <table id="tbl">
+                <thead><tr><th>Узунлик</th><th>Эни</th><th>Сони</th><th>Кромка (L1,L2 / W1,W2)</th><th></th></tr></thead>
+                <tbody></tbody>
+            </table>
+            
+            <button class="btn" style="background:transparent; border:1px solid white; color:white; width:auto;" onclick="add()">+ Детал қўшиш</button>
+            <button class="btn" onclick="calc()">📐 РАСКРОЙНИ БОШЛАШ</button>
+        </div>
+    </div>
+
+    <div class="academy-watermark">MUSTAFAYEV ACADEMY</div>
+
+    <script>
+        function add() {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td><input type="number" class="l" value="600"></td><td><input type="number" class="w" value="400"></td><td><input type="number" class="q" value="1"></td>
+            <td><input type="checkbox" class="e1"> <input type="checkbox" class="e2"> | <input type="checkbox" class="e3"> <input type="checkbox" class="e4"></td>
+            <td onclick="this.parentElement.remove()" style="color:red; cursor:pointer;">✖</td>`;
+            document.getElementById('tbl').appendChild(tr);
+        }
+        function calc() {
+            let parts = [];
+            document.querySelectorAll('#tbl tr').forEach(r => {
+                const q = +r.querySelector('.q').value;
+                for(let i=0; i<q; i++) parts.push({
+                    l: +r.querySelector('.l').value, w: +r.querySelector('.w').value,
+                    e: [r.querySelector('.e1').checked, r.querySelector('.e2').checked, r.querySelector('.e3').checked, r.querySelector('.e4').checked]
+                });
+            });
+            localStorage.setItem('parts', JSON.stringify(parts));
+            localStorage.setItem('matSize', document.getElementById('mat').value);
+            window.location.href = 'nesting.html';
+        }
+        add();
+    </script>
+</body>
+</html>
