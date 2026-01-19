@@ -1,31 +1,45 @@
 <!DOCTYPE html>
 <html lang="uz">
-<head><meta charset="UTF-8"><link rel="stylesheet" href="style.css"><title>Кабинет</title></head>
+<head><meta charset="UTF-8"><link rel="stylesheet" href="style.css"><title>Dashboard</title></head>
 <body>
     <div class="sidebar">
         <div class="brand">TABRIZ PRO</div>
-        <a href="dashboard.html" class="nav-item active">🏠 Асосий</a>
+        <a href="dashboard.html" class="nav-item active">📊 Асосий Панел</a>
         <a href="order.html" class="nav-item">➕ Янги Раскрой</a>
-        <a href="index.html" class="nav-item" style="margin-top:auto; color:red;">🚪 Чиқиш</a>
+        <a href="index.html" class="nav-item" style="margin-top:auto; color: #ff4d4d; border:1px solid rgba(255,77,77,0.3);">🛑 Чиқиш</a>
     </div>
 
     <div class="main">
         <div class="glass-card">
-            <h1>Хуш келибсиз, <span id="uName" style="color:white"></span></h1>
-            <p>Мебель ишлаб чиқариш портали.</p>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
-                <div style="background: rgba(0,0,0,0.4); padding: 20px; border-radius: 10px; border: 1px solid var(--gold);">
-                    <small style="color:#aaa">Баланс:</small>
-                    <div style="font-size: 24px; color: var(--gold); font-weight: bold;">4,200,000 UZS</div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h1 style="margin:0;">ХУШ КЕЛИБСИЗ</h1>
+                    <p style="color:#aaa; margin-top:5px;">ID: <span id="uName"></span></p>
                 </div>
-                <div style="background: rgba(0,0,0,0.4); padding: 20px; border-radius: 10px;">
-                    <small style="color:#aaa">Актив заказлар:</small>
-                    <div style="font-size: 24px; font-weight: bold;">0 та</div>
+                <div style="text-align: right;">
+                    <div style="color: var(--gold); font-size: 14px;">БУГУНГИ САНА</div>
+                    <div style="font-family: 'Orbitron'; font-size: 20px;">2026.01.19</div>
                 </div>
             </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 25px; margin-top: 40px;">
+                <div style="background: rgba(255, 215, 0, 0.1); padding: 25px; border-radius: 15px; border: 1px solid rgba(255, 215, 0, 0.3);">
+                    <small style="color:var(--gold); text-transform: uppercase;">Ҳисобдаги маблағ</small>
+                    <div style="font-size: 32px; font-weight: bold; margin-top: 10px; font-family: 'Orbitron';">4,500,000</div>
+                    <small style="color:#aaa">сўм</small>
+                </div>
 
-            <button class="btn" onclick="location.href='order.html'" style="width: auto; margin-top: 30px;">Янги буюртма бериш</button>
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <small style="color:#fff; text-transform: uppercase;">Актив буюртмалар</small>
+                    <div style="font-size: 32px; font-weight: bold; margin-top: 10px; color: #00f3ff;">2 та</div>
+                    <small style="color:#aaa">Ишлаб чиқаришда</small>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer;" onclick="location.href='order.html'">
+                    <div style="font-size: 40px; color: var(--gold); text-align: center; margin-top: 5px;">+</div>
+                    <div style="text-align: center; font-weight: bold; margin-top: 5px;">Янги Заказ</div>
+                </div>
+            </div>
         </div>
     </div>
 
