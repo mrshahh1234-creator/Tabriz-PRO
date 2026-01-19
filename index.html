@@ -1,36 +1,21 @@
 <!DOCTYPE html>
 <html lang="uz">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
-    <title>Tabriz B2B | Login</title>
-</head>
-<body style="justify-content: center; align-items: center;">
-
-    <div class="glass-card" style="width: 420px; text-align: center; border-top: 3px solid var(--gold);">
-        <h1 style="margin-bottom: 10px;">TABRIZ GROUP</h1>
-        <p style="color: #94a3b8; margin-bottom: 30px; font-size: 14px;">ИНТЕЛЛЕКТУАЛ ИШЛАБ ЧИҚАРИШ ТИЗИМИ</p>
+<head><meta charset="UTF-8"><link rel="stylesheet" href="style.css"><title>B2B Portal</title></head>
+<body style="align-items: center; justify-content: center;">
+    <div class="glass-card" style="width: 450px; text-align: center;">
+        <div style="font-size: 12px; color: var(--gold); letter-spacing: 4px; margin-bottom: 10px;">WELCOME TO</div>
+        <h1 style="margin: 0 0 40px 0; font-weight: 300; letter-spacing: 2px;">TABRIZ <b style="font-weight: 800; color: var(--gold);">GROUP</b></h1>
         
-        <div style="text-align: left;">
-            <label style="color: var(--gold); font-size: 12px; margin-left: 5px;">ТЕЛЕФОН РАҚАМ</label>
-            <input type="tel" id="phone" value="+998 " style="font-size: 20px; letter-spacing: 1px; font-family: 'Orbitron';">
-        </div>
-
-        <button class="btn" onclick="login()">🚀 ТИЗИМГА КИРИШ</button>
+        <input type="tel" id="uPhone" placeholder="Телефон рақам">
+        <button class="btn" onclick="login()">ПОРТАЛГА КИРИШ</button>
     </div>
-
     <div class="academy-watermark">MUSTAFAYEV ACADEMY</div>
-
     <script>
         function login() {
-            const ph = document.getElementById('phone').value;
-            if(ph.length > 9) {
-                localStorage.setItem('uPhone', ph);
-                // Чиройли ўтиш эффекти
-                document.querySelector('.glass-card').style.transform = "scale(0.9)";
-                document.querySelector('.glass-card').style.opacity = "0";
-                setTimeout(() => window.location.href = 'dashboard.html', 300);
-            } else alert("Рақамни тўлиқ киритинг!");
+            if(document.getElementById('uPhone').value.length > 5) {
+                localStorage.setItem('user', document.getElementById('uPhone').value);
+                window.location.href='dashboard.html';
+            }
         }
     </script>
 </body>
