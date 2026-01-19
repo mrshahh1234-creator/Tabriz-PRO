@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head><meta charset="UTF-8"><link rel="stylesheet" href="style.css"><title>Nesting</title></head>
+<body>
+    <div class="sidebar">
+        <div class="brand">TABRIZ PRO</div>
+        <a href="dashboard.html" class="nav-item">🏠 Асосий</a>
+        <a href="order.html" class="nav-item active">📐 Раскрой</a>
+    </div>
+
+    <div class="main">
+        <div class="glass-card">
+            <div style="display:flex; justify-content:space-between;">
+                <h2>НАТИЖА</h2>
+                <a href="order.html" style="color:white; text-decoration:none;">⬅ Орқага</a>
+            </div>
+            
+            <div id="canvases"></div> <div class="glass-card" style="margin-top:20px; background:rgba(0,0,0,0.3);">
+                <h3>ҲИСОБОТ:</h3>
+                <p>📦 Жами листлар: <b id="totalS" style="color:var(--gold)">0</b> та</p>
+                <p>💰 Тахминий нарх: <b id="totalP" style="color:var(--gold)">0</b> сўм</p>
+                <button class="btn" onclick="sendTg()">🚀 ИШЛАБ ЧИҚАРИШГА ЮБОРИШ</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="academy-watermark">MUSTAFAYEV ACADEMY</div>
+
+    <script>
+        const parts = JSON.parse(localStorage.getItem('parts'));
+        const [mW, mH] = localStorage.getItem('matSize').split('x').map(Number);
+        parts.sort((a,b) => (b.l*b.w) - (a.l*a.w)); // Катталарни биринчи қўямиз
+
+        const container = document.getElementById('canvases');
+        let sheetCount = 0;
+        let pQueue = [...parts];
+
+        while(pQueue.length > 0) {
+            sheetCount++;
+            const cvs = document.createElement('canvas');
+            const scale = 0.25;
+            cvs.width = mW * scale; cvs.height = mH * scale;
+            cvs.style.background = "white"; cvs.style.marginBottom = "20px"; cvs.style.borderRadius = "5px";
+            
+            const title = document.createElement('div');
+            title.innerHTML = `Лист №${sheetCount}`; title.style.color = "#aaa";
+            container.appendChild(title); container.appendChild(cvs);
+
+            const ctx = cvs.getContext('2d');
+            let cx=5, cy=5, rh=0, nextQ=[];
+
+            pQueue.forEach(p => {
+                if(cx + p.l > mW - 5) { cx=5; cy+=rh+4; rh=0; } // Янги қатор
+                if(cy + p.w > mH - 5) { nextQ.push(p); return; } // Кейинги листга қолдириш
+
+                // Чизиш
+                ctx.fillStyle = "#ddd"; ctx.fillRect(cx*scale, cy*scale, p.l*scale, p.w*scale);
+                ctx.strokeRect(cx*scale, cy*scale, p.l*scale, p.w*scale);
+                
+                // Кромка (Қизил)
+                ctx.strokeStyle = "red"; ctx.lineWidth = 2;
+                if(p.e[0]) { ctx.beginPath(); ctx.moveTo(cx*scale, cy*scale); ctx.lineTo((cx+p.l)*scale, cy*scale); ctx.stroke(); }
+                
+                cx += p.l + 4; rh = Math.max(rh, p.w);
+            });
+            pQueue = nextQ;
+        }
+
+        const price = (sheetCount * 450000) + (sheetCount * 50000); // Оддий формула
+        document.getElementById('totalS').innerText = sheetCount;
+        document.getElementById('totalP').innerText = price.toLocaleString();
+
+        async function sendTg() {
+            const txt = `🚀 ЯНГИ БУЮРТМА (Mustafayev Academy)\n👤 Клиент: ${localStorage.getItem('uPhone')}\n📦 Лист: ${sheetCount} та\n💰 Сумма: ${price} сўм`;
+            await fetch(`https://api.telegram.org/bot7927717291:AAG4h_LbZoY-1s2y0_zzNoCFudrU7pPDNas/sendMessage?chat_id=1015769230&text=${encodeURIComponent(txt)}`);
+            alert("Заказ юборилди!"); window.location.href='dashboard.html';
+        }
+    </script>
+</body>
+</html>
